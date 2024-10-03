@@ -14,7 +14,7 @@ func setGlobalZapLogger(zapCores []zapcore.Core) {
 	_logOnce.Do(func() {
 		if Log == nil {
 			zapCore := zapcore.NewTee(zapCores...)
-			Logger := zap.New(zapCore, zap.AddCaller())
+			Logger := zap.New(zapCore, zap.AddCaller(), zap.AddCallerSkip(1), zap.AddStacktrace(zap.PanicLevel))
 			zap.ReplaceGlobals(Logger)
 			Log = Logger.Sugar()
 		}
@@ -38,6 +38,10 @@ func installOptions(option *Options) {
 
 	zapCores = append(zapCores, setDisableFileLogger(option)...)
 	setGlobalZapLogger(zapCores)
+}
+
+func Sync() {
+	Log.Sync()
 }
 
 // Debug uses fmt.Sprint to construct and log a message.

@@ -6,22 +6,20 @@ import (
 	"sync"
 )
 
-
 var setupOnceHandler sync.Once
 var stop chan struct{}
 var shoutDownHandler chan os.Signal
 
-
-func SetupSignalHandler () <-chan struct{} {
-	setupOnceHandler.Do(func(){
+func SetupSignalHandler() <-chan struct{} {
+	setupOnceHandler.Do(func() {
 		shoutDownHandler = make(chan os.Signal, 2)
 		signal.Notify(shoutDownHandler, shutdownSignals...)
 
-		go func ()  {
-			<- shoutDownHandler
+		go func() {
+			<-shoutDownHandler
 			close(stop)
-			<- shoutDownHandler
-		  os.Exit(1)
+			<-shoutDownHandler
+			os.Exit(1)
 		}()
 	})
 

@@ -1,9 +1,17 @@
 package main
 
 import (
-	"hurricane/pkg/log"
+	"hurricane/internal/master"
+	"hurricane/internal/master/options"
 )
 
+type Info struct {
+	GitCommit  string   `json:"git_commit"`
+	GitVersion int      `json:"git_version"`
+	GitArr     []string `json:"git_"`
+}
+
 func main() {
-	log.NewWithOptions(log.WithEnableFile(), log.WithEnableColor(), log.WithDebugMode())
+	opts := options.NewOptions()
+	master.RunServer(opts)("hurricane")
 }
