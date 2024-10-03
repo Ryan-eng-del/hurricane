@@ -27,25 +27,25 @@ func getDefaultFilePath(name string) string {
 type Options struct {
 	// MaxSize is the maximum size in megabytes of the log file before it gets
 	// rotated. It defaults to 100 megabytes.
-	MaxSize int `mapstructure:"max_size" json:"max_size"`
+	MaxSize int `mapstructure:"max-size" json:"max-size"`
 	// MaxAge is the maximum number of days to retain old log files based on the
 	// timestamp encoded in their filename.  Note that a day is defined as 24
 	// hours and may not exactly correspond to calendar days due to daylight
 	// savings, leap seconds, etc. The default is not to remove old log files
 	// based on age.
-	MaxAge int `mapstructure:"max_age" json:"max_age"`
+	MaxAge int `mapstructure:"max-age" json:"max-age"`
 	// MaxBackups is the maximum number of old log files to retain.  The default
 	// is to retain all old log files (though MaxAge may still cause them to get
 	// deleted.)
-	MaxBackups    int    `mapstructure:"max_backups" json:"max_backups"`
-	DebugFilePath string `mapstructure:"debug_file_path" json:"debug_file_name"`
+	MaxBackups    int    `mapstructure:"max-backups" json:"max-backups"`
+	DebugFilePath string `mapstructure:"debug-file-path" json:"debug-file-path"`
 	Format        string `json:"format"             mapstructure:"format"`
 	Layout        string `json:"layout" mapstructure:"layout"`
-	EnableFile    bool   `json:"enable_file" mapstructure:"enable_file"`
-	InfoFilePath  string `mapstructure:"info_file_path" json:"info_file_name"`
-	ErrorFilePath string `mapstructure:"error_file_path" json:"error_file_name"`
+	EnableFile    bool   `json:"enable-file" mapstructure:"enable-file"`
+	InfoFilePath  string `mapstructure:"info-file-path" json:"info-file-path"`
+	ErrorFilePath string `mapstructure:"error-file-path" json:"error-file-path"`
 	EnableColor   bool   `json:"enable-color"       mapstructure:"enable-color"`
-	DebugMode     bool   `json:"debugMode" mapstructure:"debugMode"`
+	DebugMode     bool   `json:"debug-mode" mapstructure:"debug-mode"`
 }
 
 func NewOption() *Options {
