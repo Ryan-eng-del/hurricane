@@ -3,18 +3,29 @@ package master
 import (
 	"hurricane/internal/master/config"
 	"hurricane/internal/pkg/server"
+	"hurricane/pkg/log"
+	"hurricane/pkg/shutdown"
 )
 
 type MasterApiServer struct {
-	APIServer *server.BaseApiServer
+	APIServer        *server.BaseApiServer
+	GracefulShutdown *shutdown.GracefulShutdown
 }
 
 func (s *MasterApiServer) Run() error {
+	if err := s.GracefulShutdown.Start(); err != nil {
+		log.Fatalf("start shutdown manager failed: %s", err.Error())
+	}
+
 	return s.APIServer.Run()
 }
 
 func createMasterApiServer(config *config.Config) (*MasterApiServer, error) {
 	apiServerConfig, err := buildApiServerConfig(config)
+
+	gs := shutdown.New()
+	gs.AddShutdownManager(shutdown.NewPosixSignalManager())
+
 	if err != nil {
 		return nil, err
 	}
@@ -25,7 +36,8 @@ func createMasterApiServer(config *config.Config) (*MasterApiServer, error) {
 	}
 
 	return &MasterApiServer{
-		APIServer: apiServer,
+		APIServer:        apiServer,
+		GracefulShutdown: gs,
 	}, nil
 }
 
