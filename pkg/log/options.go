@@ -1,16 +1,22 @@
 package log
 
 import (
+	"encoding/json"
+	"fmt"
 	"os"
 	"path/filepath"
+	"strings"
 
+	"github.com/spf13/pflag"
 	"go.uber.org/zap/zapcore"
 )
 
 const (
 	defaultFormat      = "text"
-	defaultEnableColor = false
+	defaultEnableColor = true
 	defaultEnableFile  = false
+	consoleFormat      = "text"
+	jsonFormat         = "json"
 )
 
 var (
@@ -46,6 +52,44 @@ type Options struct {
 	ErrorFilePath string `mapstructure:"error-file-path" json:"error-file-path"`
 	EnableColor   bool   `json:"enable-color"       mapstructure:"enable-color"`
 	DebugMode     bool   `json:"debug-mode" mapstructure:"debug-mode"`
+}
+
+// Validate validate the options fields.
+func (o *Options) Validate() []error {
+	var errs []error
+
+	format := strings.ToLower(o.Format)
+	if format != consoleFormat && format != jsonFormat {
+		errs = append(errs, fmt.Errorf("not a valid log format: %q", o.Format))
+	}
+
+	return errs
+}
+
+// AddFlags adds flags for log to the specified FlagSet object.
+func (o *Options) AddFlags(fs *pflag.FlagSet) {
+	fs.StringVar(&o.DebugFilePath, "log.debug-file-path", o.DebugFilePath, "debug out file path")
+	fs.StringVar(&o.InfoFilePath, "log.info-file-path", o.InfoFilePath, "info out file path")
+	fs.StringVar(&o.ErrorFilePath, "log.error-file-path", o.ErrorFilePath, "error out file path")
+
+	fs.BoolVar(&o.EnableFile, "log.enable-file", o.EnableFile, "Disable output of caller information in the log.")
+	fs.BoolVar(&o.EnableColor, "log.enable-color", o.EnableColor, "Enable output ansi colors in plain format logs.")
+	fs.BoolVar(&o.DebugMode, "log.debug-mode", o.DebugMode, "Enable output ansi colors in plain format logs.")
+
+	fs.IntVar(&o.MaxAge, "log.max-age", o.MaxAge, "Max age of the log")
+	fs.IntVar(&o.MaxBackups, "log.max-backups", o.MaxAge, "Max backups of the log")
+	fs.IntVar(&o.MaxSize, "log.max-size", o.MaxSize, "Max sizes of the log")
+
+	fs.StringVar(&o.Format, "log.format",
+		o.Format, "Disable the log to record a stack trace for all messages at or above panic level.")
+	fs.StringVar(&o.Layout, "log.layout",
+		o.Layout, "Disable the log to record a stack trace for all messages at or above panic level.")
+}
+
+func (o *Options) String() string {
+	data, _ := json.Marshal(o)
+
+	return string(data)
 }
 
 func NewOption() *Options {

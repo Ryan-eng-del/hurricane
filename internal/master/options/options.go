@@ -1,7 +1,9 @@
 package options
 
 import (
+	"encoding/json"
 	"hurricane/internal/pkg/options"
+	"hurricane/pkg/app"
 	"hurricane/pkg/log"
 )
 
@@ -30,4 +32,23 @@ func NewOptions() *Options {
 		FeatureOptions:          options.NewFeatureOptions(),
 	}
 	return &o
+}
+
+// Flags returns flags for a specific APIServer by section name.
+func (o *Options) Flags() (fss app.NamedFlagSets) {
+	o.GenericServerRunOptions.AddFlags(fss.FlagSet("generic"))
+	o.GRPCOptions.AddFlags(fss.FlagSet("grpc"))
+	o.MySQLOptions.AddFlags(fss.FlagSet("mysql"))
+	o.RedisOptions.AddFlags(fss.FlagSet("redis"))
+	o.FeatureOptions.AddFlags(fss.FlagSet("features"))
+	o.InsecureServing.AddFlags(fss.FlagSet("insecure serving"))
+	o.SecureServing.AddFlags(fss.FlagSet("secure serving"))
+	o.Log.AddFlags(fss.FlagSet("logs"))
+	return fss
+}
+
+func (o *Options) String() string {
+	data, _ := json.Marshal(o)
+
+	return string(data)
 }

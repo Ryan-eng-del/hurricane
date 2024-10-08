@@ -1,6 +1,10 @@
 package options
 
-import "hurricane/internal/pkg/server"
+import (
+	"hurricane/internal/pkg/server"
+
+	"github.com/spf13/pflag"
+)
 
 // ServerRunOptions contains the options while running a generic api server.
 type ServerRunOptions struct {
@@ -27,4 +31,25 @@ func (s *ServerRunOptions) ApplyTo(c *server.Config) error {
 	c.Middlewares = s.Middlewares
 
 	return nil
+}
+
+// Validate checks validation of ServerRunOptions.
+func (s *ServerRunOptions) Validate() []error {
+	errors := []error{}
+
+	return errors
+}
+
+// AddFlags adds flags for a specific APIServer to the specified FlagSet.
+func (s *ServerRunOptions) AddFlags(fs *pflag.FlagSet) {
+	// Note: the weird ""+ in below lines seems to be the only way to get gofmt to
+	// arrange these text blocks sensibly. Grrr.
+	fs.StringVar(&s.Mode, "server.mode", s.Mode, ""+
+		"Start the server in a specified server mode. Supported server mode: debug, test, release.")
+
+	fs.BoolVar(&s.EnableHealth, "server.healthz", s.EnableHealth, ""+
+		"Add self readiness check and install /healthz router.")
+
+	fs.StringSliceVar(&s.Middlewares, "server.middlewares", s.Middlewares, ""+
+		"List of allowed middlewares for server, comma separated. If this list is empty default middlewares will be used.")
 }

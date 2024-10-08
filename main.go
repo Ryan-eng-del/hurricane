@@ -1,8 +1,8 @@
 package main
 
 import (
-	"hurricane/internal/master"
-	"hurricane/internal/master/options"
+	"log"
+	"strings"
 )
 
 type Info struct {
@@ -12,6 +12,5 @@ type Info struct {
 }
 
 func main() {
-	opts := options.NewOptions()
-	master.RunServer(opts)("hurricane")
+	log.Println(strings.Index("12345", "123"))
 }
