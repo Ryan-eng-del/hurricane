@@ -130,6 +130,8 @@ func (a *App) buildCommand() {
 	cmd.SetErr(os.Stderr)
 	cmd.Flags().SortFlags = true
 
+	InitFlags(cmd.Flags())
+
 	if len(a.commands) > 0 {
 		for _, command := range a.commands {
 			cmd.AddCommand(command.cobraCommand())
@@ -163,7 +165,6 @@ func (a *App) buildCommand() {
 	cmd.Flags().AddFlagSet(namedFlagSets.FlagSet("global"))
 	addCmdTemplate(&cmd, namedFlagSets)
 	a.cmd = &cmd
-
 }
 
 // Cobra RunE Interface
