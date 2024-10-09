@@ -6,7 +6,6 @@ import (
 	"os"
 
 	"github.com/Ryan-eng-del/hurricane/pkg/log"
-
 	"github.com/fatih/color"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"

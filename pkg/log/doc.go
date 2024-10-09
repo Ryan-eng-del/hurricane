@@ -1,2 +1,1 @@
-// This package is an implementation of the project logging tool
-package log
+package log // import "github.com/Ryan-eng-del/hurricane/pkg/log"

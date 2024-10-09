@@ -1,2 +1,1 @@
-// Package options contains flags and options
-package options
+package options // import "github.com/Ryan-eng-del/hurricane/internal/pkg/options"

@@ -1,2 +1,1 @@
-// Package app defines an application framework used to create application.
-package app
+package app // import "github.com/Ryan-eng-del/hurricane/pkg/app"
