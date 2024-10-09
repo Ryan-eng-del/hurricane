@@ -2,9 +2,10 @@ package options
 
 import (
 	"encoding/json"
-	"hurricane/internal/pkg/options"
-	"hurricane/pkg/app"
-	"hurricane/pkg/log"
+
+	"github.com/Ryan-eng-del/hurricane/internal/pkg/options"
+	"github.com/Ryan-eng-del/hurricane/pkg/app"
+	"github.com/Ryan-eng-del/hurricane/pkg/log"
 )
 
 type Options struct {

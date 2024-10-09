@@ -6,6 +6,10 @@ import (
 )
 
 func NewStdWithOptions(options ...Option) {
+	if StdLog != nil {
+		return
+	}
+
 	option := NewOption()
 
 	for _, o := range options {
@@ -14,6 +18,6 @@ func NewStdWithOptions(options ...Option) {
 
 	consoleZapcore := setDisableFileLogger(option)
 	zapCore := zapcore.NewTee(consoleZapcore...)
-	Logger := zap.New(zapCore, zap.AddCaller(), zap.AddCallerSkip(1), zap.AddStacktrace(zap.PanicLevel))
+	Logger := zap.New(zapCore, zap.AddCaller(), zap.AddCallerSkip(2), zap.AddStacktrace(zap.PanicLevel))
 	StdLog = Logger.Sugar()
 }

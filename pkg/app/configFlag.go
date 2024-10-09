@@ -2,10 +2,11 @@ package app
 
 import (
 	"fmt"
-	"hurricane/pkg/log"
 	"os"
 	"path/filepath"
 	"strings"
+
+	"github.com/Ryan-eng-del/hurricane/pkg/log"
 
 	"github.com/spf13/cobra"
 	"github.com/spf13/pflag"

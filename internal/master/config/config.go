@@ -1,6 +1,6 @@
 package config
 
-import "hurricane/internal/master/options"
+import "github.com/Ryan-eng-del/hurricane/internal/master/options"
 
 // Config is the running configuration structure of the hurricane service.
 type Config struct {

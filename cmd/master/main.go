@@ -1,11 +1,12 @@
 package main
 
 import (
-	"hurricane/internal/master"
 	"math/rand"
 	"time"
 
-	_ "go.uber.org/automaxprocs"
+	"github.com/Ryan-eng-del/hurricane/internal/master"
+
+	_ "github.com/Ryan-eng-del/hurricane/third_party/forked/automaxprocs"
 )
 
 func main() {

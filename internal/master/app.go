@@ -1,16 +1,16 @@
 package master
 
 import (
-	"hurricane/internal/master/config"
-	"hurricane/internal/master/options"
-	"hurricane/pkg/app"
-	"hurricane/pkg/log"
+	"github.com/Ryan-eng-del/hurricane/internal/master/config"
+	"github.com/Ryan-eng-del/hurricane/internal/master/options"
+	"github.com/Ryan-eng-del/hurricane/pkg/app"
+	"github.com/Ryan-eng-del/hurricane/pkg/log"
 )
 
 const commandDesc = `Hurricane, a distributed cron tool in Golang. The master node is responsible for accepting tasks and distributing them to the workers using etcd as a coordination service. Upon receiving the tasks, the worker nodes execute them accordingly, ensuring efficient task management and execution in a distributed environment.
 
 Find more hurricane information at:
-    https://github.com/Ryan-eng-del/Hurricane`
+    https://github.com/Ryan-eng-del/hurricane/`
 
 // NewApp creates an App object with default parameters.
 func NewApp(basename string) *app.App {

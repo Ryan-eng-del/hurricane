@@ -1,10 +1,10 @@
 package master
 
 import (
-	"hurricane/internal/master/config"
-	"hurricane/internal/pkg/server"
-	"hurricane/pkg/log"
-	"hurricane/pkg/shutdown"
+	"github.com/Ryan-eng-del/hurricane/internal/master/config"
+	"github.com/Ryan-eng-del/hurricane/internal/pkg/server"
+	"github.com/Ryan-eng-del/hurricane/pkg/log"
+	"github.com/Ryan-eng-del/hurricane/pkg/shutdown"
 )
 
 type MasterApiServer struct {

@@ -4,12 +4,14 @@ import (
 	"bytes"
 	"flag"
 	"fmt"
-	"hurricane/pkg/log"
 	"io"
 	"os"
 	"path/filepath"
 	"runtime"
 	"strings"
+
+	"github.com/Ryan-eng-del/hurricane/pkg/log"
+	"github.com/fatih/color"
 
 	"github.com/moby/term"
 	"github.com/spf13/pflag"
@@ -78,7 +80,7 @@ func PrintSections(w io.Writer, fss NamedFlagSets, cols int) {
 		}
 
 		var buf bytes.Buffer
-		fmt.Fprintf(&buf, "\n%s flags:\n\n%s", strings.ToUpper(name[:1])+name[1:], wideFS.FlagUsagesWrapped(cols))
+		fmt.Fprintf(&buf, "\n%s %s\n\n%s", color.BlueString(strings.ToUpper(name[:1])+name[1:]), color.BlueString("flags:"), wideFS.FlagUsagesWrapped(cols))
 
 		if cols > 24 {
 			i := strings.Index(buf.String(), zzz)

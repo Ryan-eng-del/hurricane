@@ -9,6 +9,7 @@ import (
 	"runtime"
 	"strconv"
 
+	"github.com/fatih/color"
 	"github.com/gosuri/uitable"
 	flag "github.com/spf13/pflag"
 )
@@ -23,7 +24,7 @@ var (
 	// GitCommit sha1 from git, output of $(git rev-parse HEAD).
 	GitCommit = "$Format:%H$"
 	// GitTreeState state of git tree, either "clean" or "dirty".
-	GitTreeState = ""
+	GitTreeState = "clean"
 )
 
 // Define some const.
@@ -121,21 +122,26 @@ func (info Info) ToJSON() string {
 	return string(s)
 }
 
+func (info Info) tableColorKeyStr(tag string) string {
+	return color.BlueString(tag)
+}
+func (info Info) tableColorValueStr(value string) string {
+	return fmt.Sprintf(": %s", value)
+}
+
 // Text encodes the version information into UTF-8-encoded text and
 // returns the result.
 func (info Info) Text() ([]byte, error) {
 	table := uitable.New()
-	table.RightAlign(0)
 	table.MaxColWidth = 80
 	table.Separator = " "
-	table.AddRow("gitVersion:", info.GitVersion)
-	table.AddRow("gitCommit:", info.GitCommit)
-	table.AddRow("gitTreeState:", info.GitTreeState)
-	table.AddRow("buildDate:", info.BuildDate)
-	table.AddRow("goVersion:", info.GoVersion)
-	table.AddRow("compiler:", info.Compiler)
-	table.AddRow("platform:", info.Platform)
-
+	table.AddRow(info.tableColorKeyStr("gitVersion"), info.tableColorValueStr(info.GitVersion))
+	table.AddRow(info.tableColorKeyStr("gitCommit"), info.tableColorValueStr(info.GitCommit))
+	table.AddRow(info.tableColorKeyStr("gitTreeState"), info.tableColorValueStr(info.GitTreeState))
+	table.AddRow(info.tableColorKeyStr("buildDate"), info.tableColorValueStr(info.BuildDate))
+	table.AddRow(info.tableColorKeyStr("goVersion"), info.tableColorValueStr(info.GoVersion))
+	table.AddRow(info.tableColorKeyStr("compiler"), info.tableColorValueStr(info.Compiler))
+	table.AddRow(info.tableColorKeyStr("platform"), info.tableColorValueStr(info.Platform))
 	return table.Bytes(), nil
 }
 

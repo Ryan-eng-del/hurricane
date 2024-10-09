@@ -8,8 +8,8 @@ import (
 	"strings"
 	"time"
 
-	"hurricane/internal/pkg/middleware"
-	"hurricane/pkg/log"
+	"github.com/Ryan-eng-del/hurricane/internal/pkg/middleware"
+	"github.com/Ryan-eng-del/hurricane/pkg/log"
 
 	"github.com/gin-contrib/pprof"
 	"github.com/gin-gonic/gin"

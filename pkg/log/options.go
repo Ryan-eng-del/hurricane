@@ -13,7 +13,7 @@ import (
 
 const (
 	defaultFormat      = "text"
-	defaultEnableColor = true
+	defaultEnableColor = false
 	defaultEnableFile  = false
 	consoleFormat      = "text"
 	jsonFormat         = "json"

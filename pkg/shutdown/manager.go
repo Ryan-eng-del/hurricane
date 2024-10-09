@@ -1,10 +1,11 @@
 package shutdown
 
 import (
-	"hurricane/pkg/log"
 	"os"
 	"os/signal"
 	"syscall"
+
+	"github.com/Ryan-eng-del/hurricane/pkg/log"
 )
 
 const Name = "PosixSignalManager"

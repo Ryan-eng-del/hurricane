@@ -3,8 +3,9 @@ package app
 import (
 	"errors"
 	"fmt"
-	"hurricane/pkg/log"
 	"os"
+
+	"github.com/Ryan-eng-del/hurricane/pkg/log"
 
 	"github.com/fatih/color"
 	"github.com/spf13/cobra"
@@ -169,13 +170,13 @@ func (a *App) buildCommand() {
 
 // Cobra RunE Interface
 func (a *App) runCommand(cmd *cobra.Command, args []string) error {
-	printWorkingDir()
-	PrintFlags(cmd.Flags())
-
 	if !a.noVersion {
 		// display application version information
 		PrintAndExitIfRequested()
 	}
+
+	printWorkingDir()
+	PrintFlags(cmd.Flags())
 
 	if !a.noConfig {
 		if err := viper.BindPFlags(cmd.Flags()); err != nil {

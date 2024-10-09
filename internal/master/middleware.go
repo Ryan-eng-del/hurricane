@@ -1,7 +1,7 @@
 package master
 
 import (
-	"hurricane/internal/pkg/server"
+	"github.com/Ryan-eng-del/hurricane/internal/pkg/server"
 
 	"github.com/gin-gonic/gin"
 )

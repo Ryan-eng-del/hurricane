@@ -1,9 +1,6 @@
 package main
 
-import (
-	"log"
-	"strings"
-)
+import "fmt"
 
 type Info struct {
 	GitCommit  string   `json:"git_commit"`
@@ -12,5 +9,5 @@ type Info struct {
 }
 
 func main() {
-	log.Println(strings.Index("12345", "123"))
+	fmt.Printf("|%-6s|%-6s|\n", "foo", "b")
 }
