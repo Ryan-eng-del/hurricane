@@ -48,5 +48,10 @@ func (err mountPointFormatInvalidError) Error() string {
 }
 
 func (err pathNotExposedFromMountPointError) Error() string {
-	return fmt.Sprintf("path %q is not a descendant of mount point root %q and cannot be exposed from %q", err.path, err.root, err.mountPoint)
+	return fmt.Sprintf(
+		"path %q is not a descendant of mount point root %q and cannot be exposed from %q",
+		err.path,
+		err.root,
+		err.mountPoint,
+	)
 }

@@ -29,10 +29,10 @@ import (
 	"math"
 	"testing"
 
+	"github.com/Ryan-eng-del/hurricane/third_party/forked/automaxprocs/internal/cgroups"
 	"github.com/prashantv/gostub"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
-	"github.com/Ryan-eng-del/hurricane/third_party/forked/automaxprocs/internal/cgroups"
 )
 
 func TestNewQueryer(t *testing.T) {

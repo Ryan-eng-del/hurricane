@@ -1,3 +1,7 @@
+// Copyright 2024 Benjamin Lee <cyan0908@163.com>. All rights reserved.
+// Use of this source code is governed by a MIT style
+// license that can be found in the LICENSE file.
+
 package log
 
 import (
@@ -33,25 +37,25 @@ func getDefaultFilePath(name string) string {
 type Options struct {
 	// MaxSize is the maximum size in megabytes of the log file before it gets
 	// rotated. It defaults to 100 megabytes.
-	MaxSize int `mapstructure:"max-size" json:"max-size"`
+	MaxSize int `mapstructure:"max-size"        json:"max-size"`
 	// MaxAge is the maximum number of days to retain old log files based on the
 	// timestamp encoded in their filename.  Note that a day is defined as 24
 	// hours and may not exactly correspond to calendar days due to daylight
 	// savings, leap seconds, etc. The default is not to remove old log files
 	// based on age.
-	MaxAge int `mapstructure:"max-age" json:"max-age"`
+	MaxAge int `mapstructure:"max-age"         json:"max-age"`
 	// MaxBackups is the maximum number of old log files to retain.  The default
 	// is to retain all old log files (though MaxAge may still cause them to get
 	// deleted.)
-	MaxBackups    int    `mapstructure:"max-backups" json:"max-backups"`
+	MaxBackups    int    `mapstructure:"max-backups"     json:"max-backups"`
 	DebugFilePath string `mapstructure:"debug-file-path" json:"debug-file-path"`
-	Format        string `json:"format"             mapstructure:"format"`
-	Layout        string `json:"layout" mapstructure:"layout"`
-	EnableFile    bool   `json:"enable-file" mapstructure:"enable-file"`
-	InfoFilePath  string `mapstructure:"info-file-path" json:"info-file-path"`
+	Format        string `mapstructure:"format"          json:"format"`
+	Layout        string `mapstructure:"layout"          json:"layout"`
+	EnableFile    bool   `mapstructure:"enable-file"     json:"enable-file"`
+	InfoFilePath  string `mapstructure:"info-file-path"  json:"info-file-path"`
 	ErrorFilePath string `mapstructure:"error-file-path" json:"error-file-path"`
-	EnableColor   bool   `json:"enable-color"       mapstructure:"enable-color"`
-	DebugMode     bool   `json:"debug-mode" mapstructure:"debug-mode"`
+	EnableColor   bool   `mapstructure:"enable-color"    json:"enable-color"`
+	DebugMode     bool   `mapstructure:"debug-mode"      json:"debug-mode"`
 }
 
 // Validate validate the options fields.

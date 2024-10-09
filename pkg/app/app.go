@@ -1,3 +1,7 @@
+// Copyright 2024 Benjamin Lee <cyan0908@163.com>. All rights reserved.
+// Use of this source code is governed by a MIT style
+// license that can be found in the LICENSE file.
+
 package app
 
 import (
@@ -5,10 +9,11 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/Ryan-eng-del/hurricane/pkg/log"
 	"github.com/fatih/color"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
+
+	"github.com/Ryan-eng-del/hurricane/pkg/log"
 )
 
 var (

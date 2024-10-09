@@ -51,7 +51,15 @@ func TestNewCGroups(t *testing.T) {
 	for _, tt := range testTable {
 		cgroup, exists := cgroups[tt.subsys]
 		assert.Equal(t, true, exists, "%q expected to present in `cgroups`", tt.subsys)
-		assert.Equal(t, tt.path, cgroup.path, "%q expected for `cgroups[%q].path`, got %q", tt.path, tt.subsys, cgroup.path)
+		assert.Equal(
+			t,
+			tt.path,
+			cgroup.path,
+			"%q expected for `cgroups[%q].path`, got %q",
+			tt.path,
+			tt.subsys,
+			cgroup.path,
+		)
 	}
 }
 

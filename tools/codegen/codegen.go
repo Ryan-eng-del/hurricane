@@ -22,8 +22,9 @@ import (
 	"regexp"
 	"strings"
 
-	"github.com/Ryan-eng-del/hurricane/pkg/log"
 	"golang.org/x/tools/go/packages"
+
+	"github.com/Ryan-eng-del/hurricane/pkg/log"
 )
 
 var errCodeDocPrefix = `# 错误码

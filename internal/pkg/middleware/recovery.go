@@ -40,12 +40,14 @@ func Recovery() gin.HandlerFunc {
 	return RecoveryWithWriter(DefaultErrorWriter)
 }
 
-// RecoveryWithWriter returns a middleware for a given writer that recovers from any panics and writes a 500 if there was one.
+// RecoveryWithWriter returns a middleware for a given writer that recovers from any panics and writes a 500 if there
+// was one.
 func RecoveryWithWriter(out io.Writer) gin.HandlerFunc {
 	return CustomRecoveryWithWriter(out, defaultHandleRecovery)
 }
 
-// CustomRecoveryWithWriter returns a middleware for a given writer that recovers from any panics and calls the provided handle func to handle it.
+// CustomRecoveryWithWriter returns a middleware for a given writer that recovers from any panics and calls the provided
+// handle func to handle it.
 func CustomRecoveryWithWriter(out io.Writer, handle RecoveryFunc) gin.HandlerFunc {
 	logger := log.Log
 	return func(c *gin.Context) {
