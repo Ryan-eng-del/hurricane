@@ -108,8 +108,7 @@ var patterns = struct {
 var (
 	licenseTemplate = make(map[string]*template.Template)
 	usage           = func() {
-		//nolint: govet
-		fmt.Println(helpText)
+		fmt.Print(helpText)
 		pflag.PrintDefaults()
 	}
 )
@@ -293,9 +292,13 @@ func addLicense(path string, fmode os.FileMode, tmpl *template.Template, data *c
 	}
 
 	b, err := os.ReadFile(path)
-	if err != nil || hasLicense(b) {
+	if err != nil {
 		return false, errors.New("read file failed")
 		// return false, errors.Wrap(err, "read file failed")
+	}
+
+	if hasLicense(b) {
+		return false, nil
 	}
 
 	line := hashBang(b)
@@ -315,9 +318,13 @@ func addLicense(path string, fmode os.FileMode, tmpl *template.Template, data *c
 // fileHasLicense reports whether the file at path contains a license header.
 func fileHasLicense(path string) (bool, error) {
 	b, err := os.ReadFile(path)
-	if err != nil || hasLicense(b) {
+	if err != nil {
 		return false, errors.New("read file failed")
 		// return false, errors.Wrap(err, "read file failed")
+	}
+
+	if hasLicense(b) {
+		return false, nil
 	}
 
 	return true, nil
