@@ -10,9 +10,11 @@ import (
 	"sync"
 )
 
-var setupOnceHandler sync.Once
-var stop chan struct{}
-var shoutDownHandler chan os.Signal
+var (
+	setupOnceHandler sync.Once
+	stop             chan struct{}
+	shoutDownHandler chan os.Signal
+)
 
 func SetupSignalHandler() <-chan struct{} {
 	setupOnceHandler.Do(func() {
@@ -38,5 +40,6 @@ func RequestShutdown() bool {
 		default:
 		}
 	}
+
 	return false
 }

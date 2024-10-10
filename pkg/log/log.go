@@ -11,8 +11,10 @@ import (
 	"go.uber.org/zap/zapcore"
 )
 
-var Log *zap.SugaredLogger
-var StdLog *zap.SugaredLogger
+var (
+	Log    *zap.SugaredLogger
+	StdLog *zap.SugaredLogger
+)
 
 var _logOnce sync.Once
 
@@ -32,7 +34,6 @@ func New(opt *Options) {
 }
 
 func installOptions(option *Options) {
-
 	var (
 		zapCores   = make([]zapcore.Core, 0, 1)
 		enableFile = option.EnableFile
@@ -47,13 +48,16 @@ func installOptions(option *Options) {
 }
 
 func Sync() {
-	Log.Sync()
+	if err := Log.Sync(); err != nil {
+		Log.Errorf("LogSyncError: %s", err.Error())
+	}
 }
 
 func getLogger() *zap.SugaredLogger {
 	if Log != nil {
 		return Log
 	}
+
 	return StdLog
 }
 
@@ -70,7 +74,6 @@ func Info(args ...interface{}) {
 // Warn uses fmt.Sprint to construct and log a message.
 func Warn(args ...interface{}) {
 	getLogger().Warn(args)
-
 }
 
 // Error uses fmt.Sprint to construct and log a message.

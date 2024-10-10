@@ -31,6 +31,7 @@ var (
 
 func getDefaultFilePath(name string) string {
 	pwd, _ := os.Getwd()
+
 	return filepath.Join(pwd, name)
 }
 
@@ -90,6 +91,7 @@ func (o *Options) AddFlags(fs *pflag.FlagSet) {
 		o.Layout, "Disable the log to record a stack trace for all messages at or above panic level.")
 }
 
+//nolint: errchkjson
 func (o *Options) String() string {
 	data, _ := json.Marshal(o)
 
@@ -131,13 +133,12 @@ func setDisableFileLogger(options *Options) []zapcore.Core {
 	}
 
 	stdCore := zapcore.NewCore(getDefaultEncoder(options), zapcore.Lock(os.Stdout), minLevel)
+
 	return append(zapCores, stdCore)
 }
 
 func setFileLogger(options *Options) []zapcore.Core {
-	var (
-		zapCores = make([]zapcore.Core, 0, 4)
-	)
+	zapCores := make([]zapcore.Core, 0, 4)
 	options = getDefaultFileOptions(options)
 
 	if options.DebugMode {

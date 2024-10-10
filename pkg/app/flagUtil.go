@@ -34,6 +34,7 @@ func TerminalSize(w io.Writer) (int, int, error) {
 	if err != nil {
 		return 0, 0, err
 	}
+
 	return int(winsize.Width), int(winsize.Height), nil
 }
 
@@ -140,6 +141,7 @@ func HomeDir() string {
 		if _, err := os.Stat(filepath.Join(p, ".apimachinery", "config")); err != nil {
 			continue
 		}
+
 		return p
 	}
 
@@ -188,6 +190,7 @@ func WordSepNormalizeFunc(f *pflag.FlagSet, name string) pflag.NormalizedName {
 	if strings.Contains(name, "_") {
 		return pflag.NormalizedName(strings.ReplaceAll(name, "_", "-"))
 	}
+
 	return pflag.NormalizedName(name)
 }
 
@@ -199,6 +202,7 @@ func WarnWordSepNormalizeFunc(f *pflag.FlagSet, name string) pflag.NormalizedNam
 
 		return pflag.NormalizedName(nname)
 	}
+
 	return pflag.NormalizedName(name)
 }
 

@@ -28,7 +28,7 @@ func AddGlobalFlags(fs *pflag.FlagSet, name string) {
 	fs.BoolP("help", "h", false, fmt.Sprintf("help for %s", name))
 }
 
-// nolint: gochecknoinits
+//nolint: gochecknoinits
 func init() {
 	pflag.StringVarP(&cfgFile, "config", "c", cfgFile, "Read configuration from specified `FILE`, "+
 		"support JSON, TOML, YAML, HCL, or Java properties formats.")

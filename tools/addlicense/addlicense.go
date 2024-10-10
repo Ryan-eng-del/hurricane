@@ -9,9 +9,9 @@ package main
 import (
 	"bufio"
 	"bytes"
+	"errors"
 	"fmt"
 	"html/template"
-	"io/ioutil"
 	"os"
 	"path/filepath"
 	"regexp"
@@ -19,7 +19,6 @@ import (
 	"time"
 	"unicode"
 
-	"github.com/marmotedu/errors"
 	"github.com/spf13/pflag"
 	"golang.org/x/sync/errgroup"
 )
@@ -109,12 +108,13 @@ var patterns = struct {
 var (
 	licenseTemplate = make(map[string]*template.Template)
 	usage           = func() {
+		//nolint: govet
 		fmt.Println(helpText)
 		pflag.PrintDefaults()
 	}
 )
 
-// nolint: gocognit // no lint
+//nolint: gocognit // no lint
 func main() {
 	pflag.Usage = usage
 	pflag.Parse()
@@ -155,8 +155,9 @@ func main() {
 	}
 
 	var t *template.Template
+
 	if *licensef != "" {
-		d, err := ioutil.ReadFile(*licensef)
+		d, err := os.ReadFile(*licensef)
 		if err != nil {
 			fmt.Printf("license file: %v\n", err)
 			os.Exit(1)
@@ -180,9 +181,7 @@ func main() {
 	go func() {
 		var wg errgroup.Group
 		for f := range ch {
-			f := f // https://golang.org/doc/faq#closures_and_goroutines
 			wg.Go(func() error {
-				// nolint: nestif
 				if *checkonly {
 					// Check if file extension is known
 					lic, err := licenseHeader(f.path, t, data)
@@ -247,7 +246,8 @@ func getPatterns(patterns []string) ([]*regexp.Regexp, error) {
 		if err != nil {
 			fmt.Printf("can't compile regexp %q\n", p)
 
-			return nil, errors.Wrap(err, "compile regexp failed")
+			// return nil, errors.Wrap(err, "compile regexp failed")
+			return nil, errors.New("compile regexp failed")
 		}
 		patternsRe = append(patternsRe, patternRe)
 	}
@@ -292,9 +292,10 @@ func addLicense(path string, fmode os.FileMode, tmpl *template.Template, data *c
 		return false, err
 	}
 
-	b, err := ioutil.ReadFile(path)
+	b, err := os.ReadFile(path)
 	if err != nil || hasLicense(b) {
-		return false, errors.Wrap(err, "read file failed")
+		return false, errors.New("read file failed")
+		// return false, errors.Wrap(err, "read file failed")
 	}
 
 	line := hashBang(b)
@@ -308,14 +309,15 @@ func addLicense(path string, fmode os.FileMode, tmpl *template.Template, data *c
 	}
 	b = append(lic, b...)
 
-	return true, ioutil.WriteFile(path, b, fmode)
+	return true, os.WriteFile(path, b, fmode)
 }
 
 // fileHasLicense reports whether the file at path contains a license header.
 func fileHasLicense(path string) (bool, error) {
-	b, err := ioutil.ReadFile(path)
+	b, err := os.ReadFile(path)
 	if err != nil || hasLicense(b) {
-		return false, errors.Wrap(err, "read file failed")
+		return false, errors.New("read file failed")
+		// return false, errors.Wrap(err, "read file failed")
 	}
 
 	return true, nil
@@ -418,7 +420,8 @@ func hasLicense(b []byte) bool {
 func prefix(t *template.Template, d *copyrightData, top, mid, bot string) ([]byte, error) {
 	var buf bytes.Buffer
 	if err := t.Execute(&buf, d); err != nil {
-		return nil, errors.Wrap(err, "render template failed")
+		return nil, errors.New("render template failed")
+		// return nil, errors.Wrap(err, "render template failed")
 	}
 	var out bytes.Buffer
 	if top != "" {
@@ -436,7 +439,7 @@ func prefix(t *template.Template, d *copyrightData, top, mid, bot string) ([]byt
 	return out.Bytes(), nil
 }
 
-// nolint: gochecknoinits
+//nolint: gochecknoinits
 func init() {
 	licenseTemplate["apache"] = template.Must(template.New("").Parse(tmplApache))
 	licenseTemplate["mit"] = template.Must(template.New("").Parse(tmplMIT))

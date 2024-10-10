@@ -10,13 +10,12 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+//nolint: gochecknoinits
 func init() {
 	server.RegisterRoute(&MasterRoute{})
 }
 
-type MasterRoute struct {
-}
+type MasterRoute struct{}
 
 func (mr *MasterRoute) Register(r *gin.Engine) {
-
 }

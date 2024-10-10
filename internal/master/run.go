@@ -11,5 +11,6 @@ func Run(config *config.Config) error {
 	if err != nil {
 		return err
 	}
+
 	return server.Run()
 }

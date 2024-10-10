@@ -26,5 +26,6 @@ func (nfs *NamedFlagSets) FlagSet(name string) *pflag.FlagSet {
 		nfs.FlagSets[name] = pflag.NewFlagSet(name, pflag.ExitOnError)
 		nfs.Order = append(nfs.Order, name)
 	}
+
 	return nfs.FlagSets[name]
 }

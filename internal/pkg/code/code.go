@@ -5,7 +5,7 @@
 // Package code defines the error codes used in the application.
 package code
 
-// HTTP error codes for the IAM system
+// HTTP error codes for the IAM system.
 const (
 	// ErrDatabase - 500: Database error.
 	ErrDatabase int = 100101

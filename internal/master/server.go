@@ -34,7 +34,6 @@ func createMasterApiServer(config *config.Config) (*MasterApiServer, error) {
 		return nil, err
 	}
 	apiServer, err := apiServerConfig.NewServer()
-
 	if err != nil {
 		return nil, err
 	}
@@ -62,5 +61,6 @@ func buildApiServerConfig(config *config.Config) (serverConfig *server.Config, l
 	if lastErr = config.InsecureServing.ApplyTo(serverConfig); lastErr != nil {
 		return
 	}
+
 	return
 }

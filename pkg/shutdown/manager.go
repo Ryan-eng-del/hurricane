@@ -41,6 +41,7 @@ func (posixSignalManager *PosixSignalManager) GetName() string {
 // ShutdownStart does nothing.
 func (posixSignalManager *PosixSignalManager) ShutdownStart() error {
 	log.Info("开始 shutdown")
+
 	return nil
 }
 
@@ -48,6 +49,7 @@ func (posixSignalManager *PosixSignalManager) ShutdownStart() error {
 func (posixSignalManager *PosixSignalManager) ShutdownFinish() error {
 	log.Info("结束 shutdown")
 	os.Exit(0)
+
 	return nil
 }
 
@@ -62,5 +64,4 @@ func (posixSignalManager *PosixSignalManager) Start(gc GracefulShutdownInterface
 	}()
 
 	return nil
-
 }

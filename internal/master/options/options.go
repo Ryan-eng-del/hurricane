@@ -36,6 +36,7 @@ func NewOptions() *Options {
 		Log:                     log.NewOption(),
 		FeatureOptions:          options.NewFeatureOptions(),
 	}
+
 	return &o
 }
 
@@ -49,10 +50,12 @@ func (o *Options) Flags() (fss app.NamedFlagSets) {
 	o.InsecureServing.AddFlags(fss.FlagSet("insecure serving"))
 	o.SecureServing.AddFlags(fss.FlagSet("secure serving"))
 	o.Log.AddFlags(fss.FlagSet("logs"))
+
 	return fss
 }
 
 func (o *Options) String() string {
+	//nolint: errchkjson
 	data, _ := json.Marshal(o)
 
 	return string(data)

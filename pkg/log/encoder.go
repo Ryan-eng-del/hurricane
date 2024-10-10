@@ -32,5 +32,6 @@ func getDefaultEncoder(options *Options) zapcore.Encoder {
 	if options.Format == "json" {
 		return zapcore.NewJSONEncoder(encoderConfig)
 	}
+
 	return zapcore.NewConsoleEncoder(encoderConfig)
 }

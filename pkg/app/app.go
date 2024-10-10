@@ -16,9 +16,7 @@ import (
 	"github.com/Ryan-eng-del/hurricane/pkg/log"
 )
 
-var (
-	progressMessage = color.GreenString("==>")
-)
+var progressMessage = color.GreenString("==>")
 
 type App struct {
 	basename    string
@@ -95,6 +93,7 @@ func NewApp(name string, basename string, opts ...Option) *App {
 
 	app.initStdLogger()
 	app.buildCommand()
+
 	return app
 }
 
@@ -172,7 +171,7 @@ func (a *App) buildCommand() {
 	a.cmd = &cmd
 }
 
-// Cobra RunE Interface
+// Cobra RunE Interface.
 func (a *App) runCommand(cmd *cobra.Command, args []string) error {
 	if !a.noVersion {
 		// display application version information
@@ -211,6 +210,7 @@ func (a *App) runCommand(cmd *cobra.Command, args []string) error {
 	if a.runFunc != nil {
 		return a.runFunc(a.basename)
 	}
+
 	return nil
 }
 
@@ -223,6 +223,7 @@ func (a *App) applyOptionRules() error {
 
 	if errs := a.options.Validate(); len(errs) != 0 {
 		log.Errorf("validate errors %+v", errs)
+
 		return errors.New("参数校验错误")
 	}
 
@@ -231,7 +232,6 @@ func (a *App) applyOptionRules() error {
 	}
 
 	return nil
-
 }
 
 func addCmdTemplate(cmd *cobra.Command, namedFlagSets NamedFlagSets) {
@@ -240,6 +240,7 @@ func addCmdTemplate(cmd *cobra.Command, namedFlagSets NamedFlagSets) {
 	cmd.SetUsageFunc(func(cmd *cobra.Command) error {
 		fmt.Fprintf(cmd.OutOrStderr(), usageFmt, cmd.UseLine())
 		PrintSections(cmd.OutOrStderr(), namedFlagSets, cols)
+
 		return nil
 	})
 	cmd.SetHelpFunc(func(cmd *cobra.Command, args []string) {
@@ -265,6 +266,7 @@ func WithDefaultValidArgs() Option {
 					return fmt.Errorf("%q does not take any arguments, got %q", cmd.CommandPath(), args)
 				}
 			}
+
 			return nil
 		}
 	}

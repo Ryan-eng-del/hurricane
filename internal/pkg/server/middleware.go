@@ -12,9 +12,8 @@ type Middleware interface {
 
 var injectMiddlewares = []gin.HandlerFunc{}
 
-func AddMiddlewares(middlewares ...Middleware) error {
+func AddMiddlewares(middlewares ...Middleware) {
 	for _, middleware := range middlewares {
 		injectMiddlewares = append(injectMiddlewares, middleware.Fetch()...)
 	}
-	return nil
 }

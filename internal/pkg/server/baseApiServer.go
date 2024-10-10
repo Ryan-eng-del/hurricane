@@ -22,10 +22,10 @@ import (
 )
 
 type BaseApiServer struct {
-	middlewares                                  []string
-	SecureServingInfo                            *SecureServingInfo
-	InsecureServingInfo                          *InsecureServingInfo
-	shutdownTimeout                              time.Duration
+	middlewares         []string
+	SecureServingInfo   *SecureServingInfo
+	InsecureServingInfo *InsecureServingInfo
+	// shutdownTimeout                              time.Duration
 	enableHealth, enableMetrics, enableProfiling bool
 	InsecureServer, SecureServer                 *http.Server
 	*ServerOption
@@ -83,6 +83,7 @@ func (s *BaseApiServer) InstallMiddlewares() {
 		mw, ok := middleware.Middlewares[m]
 		if !ok {
 			log.Warnf("can not find middleware: %s", m)
+
 			continue
 		}
 
@@ -142,6 +143,7 @@ func (s *BaseApiServer) Run() error {
 
 		if err := s.SecureServer.ListenAndServeTLS(cert, key); err != nil && !errors.Is(err, http.ErrServerClosed) {
 			log.Fatal(err.Error())
+
 			return err
 		}
 
@@ -187,6 +189,7 @@ func (s *BaseApiServer) ping(ctx context.Context) (err error) {
 		if err == nil && resp.StatusCode == http.StatusOK {
 			log.Info("The router has been deployed successfully.")
 			resp.Body.Close()
+
 			return nil
 		}
 
@@ -200,5 +203,4 @@ func (s *BaseApiServer) ping(ctx context.Context) (err error) {
 		default:
 		}
 	}
-
 }

@@ -16,7 +16,6 @@ import (
 	"go/token"
 	"go/types"
 	"html/template"
-
 	"os"
 	"path/filepath"
 	"regexp"
@@ -343,7 +342,7 @@ func (v *Value) ParseComment() (string, string) {
 	return groups[1], groups[2]
 }
 
-// nolint: gocognit
+//nolint: gocognit
 // genDecl processes one declaration clause.
 func (f *File) genDecl(node ast.Node) bool {
 	decl, ok := node.(*ast.GenDecl)

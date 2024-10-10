@@ -70,6 +70,7 @@ func (s *SecureServingOptions) ApplyTo(c *server.Config) error {
 			KeyFile:  s.ServerCert.CertKey.KeyFile,
 		},
 	}
+
 	return nil
 }
 

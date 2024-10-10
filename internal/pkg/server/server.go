@@ -53,5 +53,6 @@ func (c *Config) NewServer() (*BaseApiServer, error) {
 	}
 
 	initGenericAPIServer(s)
+
 	return s, nil
 }

@@ -43,6 +43,7 @@ func (o *EtcdOptions) Validate() []error {
 	if o.RequestTimeout <= 0 {
 		errs = append(errs, fmt.Errorf("--etcd.request-timeout cannot be negative"))
 	}
+
 	return errs
 }
 

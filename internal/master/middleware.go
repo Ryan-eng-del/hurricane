@@ -14,6 +14,7 @@ var masterMiddlewares = make([]gin.HandlerFunc, 0)
 
 type MasterMiddleware struct{}
 
+//nolint: gochecknoinits
 func init() {
 	server.AddMiddlewares(&MasterMiddleware{})
 }

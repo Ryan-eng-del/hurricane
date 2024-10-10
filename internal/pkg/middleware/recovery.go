@@ -46,12 +46,15 @@ func RecoveryWithWriter(out io.Writer) gin.HandlerFunc {
 	return CustomRecoveryWithWriter(out, defaultHandleRecovery)
 }
 
+//nolint: gocognit
 // CustomRecoveryWithWriter returns a middleware for a given writer that recovers from any panics and calls the provided
 // handle func to handle it.
 func CustomRecoveryWithWriter(out io.Writer, handle RecoveryFunc) gin.HandlerFunc {
 	logger := log.Log
+
 	return func(c *gin.Context) {
 		defer func() {
+			//nolint: nestif
 			if err := recover(); err != nil {
 				// Check for a broken connection, as it is not really a
 				// condition that warrants a panic stack trace.
@@ -129,6 +132,7 @@ func stack(skip int) []byte {
 		}
 		fmt.Fprintf(buf, "\t%s: %s\n", function(pc), source(lines, line))
 	}
+
 	return buf.Bytes()
 }
 
@@ -138,6 +142,7 @@ func source(lines [][]byte, n int) []byte {
 	if n < 0 || n >= len(lines) {
 		return dunno
 	}
+
 	return bytes.TrimSpace(lines[n])
 }
 
@@ -163,6 +168,7 @@ func function(pc uintptr) []byte {
 		name = name[period+1:]
 	}
 	name = bytes.ReplaceAll(name, centerDot, dot)
+
 	return name
 }
 

@@ -51,14 +51,17 @@ func (v *versionValue) Get() interface{} {
 func (v *versionValue) Set(s string) error {
 	if s == strRawVersion {
 		*v = VersionRaw
+
 		return nil
 	}
+
 	boolVal, err := strconv.ParseBool(s)
 	if boolVal {
 		*v = VersionTrue
 	} else {
 		*v = VersionFalse
 	}
+
 	return err
 }
 
@@ -66,6 +69,7 @@ func (v *versionValue) String() string {
 	if *v == VersionRaw {
 		return strRawVersion
 	}
+
 	return fmt.Sprintf("%v", bool(*v == VersionTrue))
 }
 
@@ -86,6 +90,7 @@ func VersionVar(p *versionValue, name string, value versionValue, usage string) 
 func Version(name string, value versionValue, usage string) *versionValue {
 	p := new(versionValue)
 	VersionVar(p, name, value, usage)
+
 	return p
 }
 
@@ -119,6 +124,7 @@ func (info Info) String() string {
 	return info.GitVersion
 }
 
+//nolint: errchkjson
 // ToJSON returns the JSON string of version information.
 func (info Info) ToJSON() string {
 	s, _ := json.Marshal(info)
@@ -129,6 +135,7 @@ func (info Info) ToJSON() string {
 func (info Info) tableColorKeyStr(tag string) string {
 	return color.BlueString(tag)
 }
+
 func (info Info) tableColorValueStr(value string) string {
 	return fmt.Sprintf(": %s", value)
 }
@@ -146,6 +153,7 @@ func (info Info) Text() ([]byte, error) {
 	table.AddRow(info.tableColorKeyStr("goVersion"), info.tableColorValueStr(info.GoVersion))
 	table.AddRow(info.tableColorKeyStr("compiler"), info.tableColorValueStr(info.Compiler))
 	table.AddRow(info.tableColorKeyStr("platform"), info.tableColorValueStr(info.Platform))
+
 	return table.Bytes(), nil
 }
 

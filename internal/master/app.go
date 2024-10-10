@@ -11,6 +11,7 @@ import (
 	"github.com/Ryan-eng-del/hurricane/pkg/log"
 )
 
+//nolint: lll
 const commandDesc = `Hurricane, a distributed cron tool in Golang. The master node is responsible for accepting tasks and distributing them to the workers using etcd as a coordination service. Upon receiving the tasks, the worker nodes execute them accordingly, ensuring efficient task management and execution in a distributed environment.
 
 Find more hurricane information at:
@@ -39,6 +40,7 @@ func run(opts *options.Options) app.RunFunc {
 		if err != nil {
 			return err
 		}
+
 		return Run(cfg)
 	}
 }
