@@ -180,9 +180,10 @@ check-updates:
 tidy:
 	@$(GO) mod tidy
 
-.PHONY: run
-run:
-	@$(GO) mod tidy
+.PHONY: runm
+runm:
+	@echo $(ROOT_DIR)
+	@$(GO) run $(ROOT_DIR)/cmd/master -c $(ROOT_DIR)/configs/master.yaml
 
 ## help: Show this help info.
 .PHONY: help

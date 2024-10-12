@@ -24,6 +24,7 @@ iam::golang::setup_env
 # iam::build::build_command
 # iam::release::package_tarballs
 # iam::release::updload_tarballs
+git push origin main
 iam::release::github_release
 iam::release::github_upload
 iam::release::generate_changelog
