@@ -27,7 +27,7 @@ readonly RELEASE_IMAGES="${LOCAL_OUTPUT_ROOT}/release-images"
 # IAM github account info
 readonly IAM_GITHUB_ORG=Ryan-eng-del
 readonly IAM_GITHUB_REPO=hurricane
-readonly IAM_GITHUB_TAG=v1.0.4
+readonly IAM_GITHUB_TAG=v0.1.1
 readonly IAM_GITHUB_NAME="Hurricane ${IAM_GITHUB_TAG}"
 readonly IAM_GITHUB_TOKEN=$(sed -n '1p' "${IAM_ROOT}/security.log")
 export GITHUB_TOKEN=${IAM_GITHUB_TOKEN}
@@ -568,6 +568,9 @@ function iam::release::github_release() {
     --tag ${IAM_GITHUB_TAG} \
     --name "${IAM_GITHUB_NAME}" \
     --pre-release
+
+  # fetch tags for upload file to specified tag
+  git fetch --tags
 }
 
 
@@ -588,6 +591,5 @@ function iam::release::generate_changelog() {
   git add ${IAM_ROOT}/CHANGELOG/CHANGELOG-${IAM_GIT_VERSION#v}.md
   git commit -a -m "docs(changelog): add CHANGELOG-${IAM_GIT_VERSION#v}.md"
   git push
-  # git push -f origin main # 最后将 CHANGELOG 也 push 上去
 }
 

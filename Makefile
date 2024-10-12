@@ -180,6 +180,10 @@ check-updates:
 tidy:
 	@$(GO) mod tidy
 
+.PHONY: run
+run:
+	@$(GO) mod tidy
+
 ## help: Show this help info.
 .PHONY: help
 help: Makefile
