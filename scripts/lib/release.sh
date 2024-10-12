@@ -25,10 +25,14 @@ readonly RELEASE_TARS="${LOCAL_OUTPUT_ROOT}/release-tars"
 readonly RELEASE_IMAGES="${LOCAL_OUTPUT_ROOT}/release-images"
 
 # IAM github account info
-readonly IAM_GITHUB_ORG=marmotedu
-readonly IAM_GITHUB_REPO=iam
+readonly IAM_GITHUB_ORG=Ryan-eng-del
+readonly IAM_GITHUB_REPO=hurricane
+readonly IAM_GITHUB_TAG=v1.0.4
+readonly IAM_GITHUB_NAME="Hurricane ${IAM_GITHUB_TAG}"
+readonly IAM_GITHUB_TOKEN=$(sed -n '1p' "${IAM_ROOT}/security.log")
+export GITHUB_TOKEN=${IAM_GITHUB_TOKEN}
 
-readonly ARTIFACT=iam.tar.gz
+readonly ARTIFACT=hurricane.tar.gz
 readonly CHECKSUM=${ARTIFACT}.sha1sum
 
 IAM_BUILD_CONFORMANCE=${IAM_BUILD_CONFORMANCE:-y}
@@ -436,7 +440,6 @@ EOF
 os=linux arch=amd64 version=${IAM_GIT_VERSION} && wget https://${BUCKET}.cos.${REGION}.myqcloud.com/${COS_RELEASE_DIR}/\$version/{iam-client-\$os-\$arch.tar.gz,iam-server-\$os-\$arch.tar.gz}
 EOF
   chmod +x ${release_stage}/release/get-iam-binaries.sh
-
   mkdir -p "${release_stage}/server"
   cp "${RELEASE_TARS}/iam-manifests.tar.gz" "${release_stage}/server/"
   cat <<EOF > "${release_stage}/server/README"
@@ -558,40 +561,33 @@ EOF
 # https://github.com/github-release/github-release
 function iam::release::github_release() {
   # create a github release
-  iam::log::info "create a new github release with tag ${IAM_GIT_VERSION}"
+  iam::log::info "create hurricane release"
   github-release release \
     --user ${IAM_GITHUB_ORG} \
     --repo ${IAM_GITHUB_REPO} \
-    --tag ${IAM_GIT_VERSION} \
-    --description "" \
+    --tag ${IAM_GITHUB_TAG} \
+    --name "${IAM_GITHUB_NAME}" \
     --pre-release
+}
 
-  # update iam tarballs
+
+function iam::release::github_upload() {
   iam::log::info "upload ${ARTIFACT} to release ${IAM_GIT_VERSION}"
   github-release upload \
     --user ${IAM_GITHUB_ORG} \
     --repo ${IAM_GITHUB_REPO} \
-    --tag ${IAM_GIT_VERSION} \
-    --name ${ARTIFACT} \
-    --file ${RELEASE_TARS}/${ARTIFACT}
-
-  iam::log::info "upload iam-src.tar.gz to release ${IAM_GIT_VERSION}"
-  github-release upload \
-    --user ${IAM_GITHUB_ORG} \
-    --repo ${IAM_GITHUB_REPO} \
-    --tag ${IAM_GIT_VERSION} \
-    --name "iam-src.tar.gz" \
-    --file ${RELEASE_TARS}/iam-src.tar.gz
+    --name hurricane.tar.gz \
+    --tag ${IAM_GITHUB_TAG} \
+    --file ${RELEASE_TARS}/hurricane.tar.gz
 }
 
 function iam::release::generate_changelog() {
   iam::log::info "generate CHANGELOG-${IAM_GIT_VERSION#v}.md and commit it"
-
   git-chglog ${IAM_GIT_VERSION} > ${IAM_ROOT}/CHANGELOG/CHANGELOG-${IAM_GIT_VERSION#v}.md
-
   set +o errexit
   git add ${IAM_ROOT}/CHANGELOG/CHANGELOG-${IAM_GIT_VERSION#v}.md
   git commit -a -m "docs(changelog): add CHANGELOG-${IAM_GIT_VERSION#v}.md"
-  git push -f origin master # 最后将 CHANGELOG 也 push 上去
+  git push
+  # git push -f origin main # 最后将 CHANGELOG 也 push 上去
 }
 

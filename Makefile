@@ -6,7 +6,8 @@
 .DEFAULT_GOAL := all
 
 .PHONY: all
-all: tidy gen add-copyright format lint cover build
+# all: tidy gen add-copyright format lint cover build
+all: tidy add-copyright format lint cover build
 
 # ==============================================================================
 # Build options
