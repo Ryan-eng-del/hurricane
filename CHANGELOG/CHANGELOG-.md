@@ -1,4 +1,12 @@
 
+<a name="v0.1.1"></a>
+## [v0.1.1](https://github.com/Ryan-eng-del/hurricane.git/compare/v0.1.0...v0.1.1) (2024-10-12)
+
+### Bug Fixes
+
+* **test release:** test releash a new pre release version
+
+
 <a name="v0.1.0"></a>
 ## v0.1.0 (2024-10-12)
 

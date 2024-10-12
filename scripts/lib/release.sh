@@ -27,7 +27,7 @@ readonly RELEASE_IMAGES="${LOCAL_OUTPUT_ROOT}/release-images"
 # IAM github account info
 readonly IAM_GITHUB_ORG=Ryan-eng-del
 readonly IAM_GITHUB_REPO=hurricane
-readonly IAM_GITHUB_TAG=v0.1.0
+readonly IAM_GITHUB_TAG=v0.1.1
 readonly IAM_GITHUB_NAME="Hurricane ${IAM_GITHUB_TAG}"
 readonly IAM_GITHUB_TOKEN=$(sed -n '1p' "${IAM_ROOT}/security.log")
 export GITHUB_TOKEN=${IAM_GITHUB_TOKEN}
@@ -567,7 +567,6 @@ function iam::release::github_release() {
     --repo ${IAM_GITHUB_REPO} \
     --tag ${IAM_GITHUB_TAG} \
     --name "${IAM_GITHUB_NAME}" \
-    --pre-release
 
   # fetch tags for upload file to specified tag
   git fetch --tags
