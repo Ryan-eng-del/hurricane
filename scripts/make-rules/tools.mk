@@ -117,4 +117,6 @@ install.kube-score:
 
 .PHONY: install.go-gitlint
 install.go-gitlint:
-	@$(GO) install github.com/marmotedu/go-gitlint/cmd/go-gitlint@latest
+	@$(ROOT_DIR)/scripts/download-gitlint.sh
+
+
