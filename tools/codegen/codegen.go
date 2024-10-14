@@ -250,12 +250,15 @@ func (g *Generator) generate(typeName string) {
 	if len(values) == 0 {
 		log.Fatalf("no values defined for type %s", typeName)
 	}
+
+	g.Printf("\t import \"github.com/Ryan-eng-del/hurricane/pkg/errors\"")
 	// Generate code that will fail if the constants change value.
-	g.Printf("\t// init register error codes defines in this source code to `github.com/marmotedu/errors`\n")
+	g.Printf("\t// init register error codes defines in this source code to `github.com/Ryan-eng-del/hurricane/pkg/errors\n")
+
 	g.Printf("func init() {\n")
 	for _, v := range values {
 		code, description := v.ParseComment()
-		g.Printf("\tregister(%s, %s, \"%s\")\n", v.originalName, code, description)
+		g.Printf("\terrors.Enroll(%s, %s, \"%s\")\n", v.originalName, code, description)
 	}
 	g.Printf("}\n")
 }
@@ -342,7 +345,7 @@ func (v *Value) ParseComment() (string, string) {
 	return groups[1], groups[2]
 }
 
-//nolint: gocognit
+// nolint: gocognit
 // genDecl processes one declaration clause.
 func (f *File) genDecl(node ast.Node) bool {
 	decl, ok := node.(*ast.GenDecl)

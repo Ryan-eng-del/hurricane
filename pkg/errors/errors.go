@@ -343,3 +343,11 @@ func Cause(err error) error {
 	}
 	return err
 }
+
+func Enroll(bizCode int, HTTPCode int, message string) {
+	Register(defaultCoder{
+		C:    bizCode,
+		HTTP: HTTPCode,
+		Ext:  message,
+	})
+}
