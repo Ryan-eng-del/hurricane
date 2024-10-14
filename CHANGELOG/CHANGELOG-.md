@@ -1,4 +1,19 @@
 
+<a name="v0.0.1"></a>
+## [v0.0.1](https://github.com/Ryan-eng-del/hurricane.git/compare/v0.1.1...v0.0.1) (2024-10-14)
+
+### Bug Fixes
+
+* **make gen:** support generate  bizCodes which by template codes to analysis ast tree and runtime types
+
+### Features
+
+* fork pkg/errors as Go Err Handling
+* install go-gitlint
+* complete make functions like release, swagger, image deploy
+* **errors:**  support err detail with wrap stack, biz code ,message  and aggregate
+
+
 <a name="v0.1.1"></a>
 ## [v0.1.1](https://github.com/Ryan-eng-del/hurricane.git/compare/v0.1.0...v0.1.1) (2024-10-12)
 
