@@ -7,7 +7,7 @@ package main
 import (
 	"log"
 
-	"github.com/pkg/errors"
+	"github.com/marmotedu/errors"
 )
 
 type Info struct {
@@ -22,7 +22,7 @@ type PathError struct {
 type PathError1 struct {
 }
 
-var Err2 = errors.New("Error1")
+var Err2 = errors.New("Error2")
 var Err1 = errors.New("Error1")
 
 var Err3 = &PathError{}
@@ -47,7 +47,7 @@ func (*PathError1) Err3Switch() string {
 }
 
 func Error2() error {
-	return Err4
+	return Err1
 }
 
 func Error1() error {
@@ -59,10 +59,6 @@ func Error1() error {
 
 func main() {
 	if err := Error1(); err != nil {
-		// log.Println(errors.Is(err, Err2))
-		errors.As(err, &Err1)
-		log.Println(errors.As(err, &Err3))
-		log.Println(errors.As(err, &Err4))
-		log.Println(errors.As(err, &Err5))
+		log.Println(err)
 	}
 }

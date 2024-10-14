@@ -4,8 +4,18 @@ import (
 	"errors"
 	"fmt"
 	"io"
+	"log"
 	"reflect"
 	"testing"
+)
+
+const (
+	// Error codes below 1000 are reserved future use by the
+	// "github.com/bdlm/errors" package.
+	ConfigurationNotValid int = iota + 1000
+	ErrInvalidJSON
+	ErrEOF
+	ErrLoadConfigFailed
 )
 
 func TestNew(t *testing.T) {
@@ -31,6 +41,44 @@ func TestWrapNil(t *testing.T) {
 	got := Wrap(nil, "no error")
 	if got != nil {
 		t.Errorf("Wrap(nil, \"no error\"): got %#v, expected nil", got)
+	}
+}
+
+func TestAggregate(t *testing.T) {
+	err1 := New("error 1")
+	err2 := New("error 2")
+	e := NewAggregate([]error{err1, err2})
+
+	log.Println(e)
+
+}
+
+func TestWithCode(t *testing.T) {
+	tests := []struct {
+		code     int
+		message  string
+		wantType string
+		wantCode int
+	}{
+		{ConfigurationNotValid, "ConfigurationNotValid error", "*withCode", ConfigurationNotValid},
+	}
+
+	for _, tt := range tests {
+		err1 := New("errro new")
+		err3 := Wrap(err1, "err new new new")
+		err2 := WrapC(err3, ConfigurationNotValid, "wraper code %s", "code")
+		fmt.Printf("%#+v", err2)
+
+		got := WithCode(tt.code, tt.message)
+		// er := Wrap(got, "Error Wrapper")
+		err, ok := got.(*withCode)
+		if !ok {
+			t.Errorf("WithCode(%v, %q): error type got: %T, want %s", tt.code, tt.message, got, tt.wantType)
+		}
+		// fmt.Printf("%#+v", er)
+		if err.code != tt.wantCode {
+			t.Errorf("WithCode(%v, %q): got: %v, want %v", tt.code, tt.message, err.code, tt.wantCode)
+		}
 	}
 }
 
